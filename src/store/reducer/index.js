@@ -14,7 +14,7 @@ export default(state =INITIAL_STATE,action)=>{
         case "SETDATA":
             return({
                 ...state,
-                users:[...state.users,]
+                users:[...state.users,action.data]
             })    
         default:
             return state;
