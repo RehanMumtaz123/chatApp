@@ -1,9 +1,22 @@
 const INITIAL_STATE={
     users:[{
         name:"Rehan",
-        email:"rehanmum0@gmail.com"
-    }]
+        email:"rehanmum0@gmail.com" 
+    },
+    {
+        name:"Fahad",
+        email:"fh@gmail.com",
+    }    
+    ]
 }
 export default(state =INITIAL_STATE,action)=>{
-    return state;
+    switch (action.type) {
+        case "SETDATA":
+            return({
+                ...state,
+                users:[...state.users,]
+            })    
+        default:
+            return state;
+    }
 }
