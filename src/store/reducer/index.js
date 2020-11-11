@@ -4,11 +4,11 @@ const INITIAL_STATE = {
 };
 export default (state = INITIAL_STATE, action) => {
   switch (action.type) {
-    // case "SETDATA":
-    //   return {
-    //     ...state,
-    //     users: [...state.users, action.payload],
-    //   };
+    case "SETFIREBASEUSERS":
+      return {
+        ...state,
+        users:  action.payload,
+      };
     case "SETUSER":
       return {
         ...state,

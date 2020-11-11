@@ -1,11 +1,6 @@
 import firebase from '../../config/firebase';
-import history from 'history/createBrowserHistory';
-import {useHistory} from 'react-router-dom';
-const set_data = (data) => {
-  return (dispatch) => {
-    // dispatch({ type: "SETDATA", payload: data });
-  };
-};
+
+
 const fblogin = (history) => {
 
   return(dispatch)=>{
@@ -44,6 +39,17 @@ const fblogin = (history) => {
       });
   }
 };
+const get_users = () => {
+  return (dispatch) => {
+    let user = []
+    firebase.database().ref('/').child('users').on('child_added',(data)=>{
+      user.push(data.val())
+    })
+    dispatch({type:"SETFIREBASEUSERS", payload:user})
+  };
+};
+
+
 export { 
-  set_data,
+  get_users,
    fblogin };
