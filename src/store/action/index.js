@@ -1,13 +1,12 @@
-// import Firebase from '../../config/firebase';
-import firebase from 'firebase';
-
+import firebase from '../../config/firebase';
+import history from 'history/createBrowserHistory';
+import {useHistory} from 'react-router-dom';
 const set_data = (data) => {
   return (dispatch) => {
-    dispatch({ type: "SETDATA", data: data });
-    dispatch({ type: "SETCHAT", data: data });
+    // dispatch({ type: "SETDATA", payload: data });
   };
 };
-const fblogin = () => {
+const fblogin = (history) => {
 
   return(dispatch)=>{
     var provider = new firebase.auth.FacebookAuthProvider();
@@ -18,12 +17,26 @@ const fblogin = () => {
         var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
-        // ...
+        let create_user={
+          name:user.displayName,
+          email:user.email,
+          photo:user.photoURL,
+          uid:user.uid,
+        }
+
+        firebase.database().ref('/').child(`users/${user.uid}`).set(create_user)
+        .then(()=>{
+          dispatch({ type: "SETUSER", payload: create_user });
+
+          alert("login successful")
+          history.push('/chat')
+        })
       }).catch(function(error) {
         // Handle Errors here.
         var errorCode = error.code;
         var errorMessage = error.message;
         // The email of the user's account used.
+        console.log("error==>",errorMessage)
         var email = error.email;
         // The firebase.auth.AuthCredential type that was used.
         var credential = error.credential;
@@ -31,4 +44,6 @@ const fblogin = () => {
       });
   }
 };
-export { set_data, fblogin };
+export { 
+  set_data,
+   fblogin };

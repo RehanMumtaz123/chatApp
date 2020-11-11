@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import "./index.css";
 import { connect } from "react-redux";
-import { set_data, fblogin } from "../../store/action";
+import { fblogin } from "../../store/action";
 class Home extends Component {
   render() {
     return (
       <div>
         <h1>Home</h1>
-        <button onClick={()=>this.props.fblogin()}>FB Login</button>
+        <button onClick={()=>this.props.fblogin(this.props.history)}>FB Login</button>
       </div>
     );
   }
@@ -15,9 +15,10 @@ class Home extends Component {
 const mapStateToProps = (state) => ({
   users: state.users,  
 });
-const dispatchToProps = (dispatch) => ({
-  set_data: (data) => dispatch(set_data(data)),
-  fblogin: () => dispatch(fblogin()),
+const mapdispatchToProps = (dispatch) => ({
+  // set_data: (data) => dispatch(set_data(data)),
+  fblogin: (history) => dispatch(fblogin(history)),
+  
 });
 
-export default connect(mapStateToProps,dispatchToProps)(Home);
+export default connect(mapStateToProps,mapdispatchToProps)(Home);
